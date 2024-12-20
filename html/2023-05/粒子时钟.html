@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>粒子时钟</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        canvas {
+            background: radial-gradient(#fff, #bc738c);
+            display: block;
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas></canvas>
+    <script>
+        const cavas = document.querySelector('canvas');
+        const ctx = cavas.getContext('2d', {
+            willReadFrequently: true,
+        });
+
+        function initCavasSize() {
+            cavas.width = window.innerWidth * devicePixelRatio;
+            cavas.height = window.innerHeight * devicePixelRatio;
+        }
+        initCavasSize();
+        let text = null;
+
+        function getRandom(min, max) {
+            return Math.floor(Math.random() * (max + 1 - min) + min);
+        }
+
+        class Particle {
+            constructor() {
+                const r = Math.min(cavas.width, cavas.height) / 2;
+                const cx = cavas.width / 2;
+                const cy = cavas.height / 2;
+                const rad = getRandom(0, 360) * Math.PI / 180;
+                this.x = cx + r * Math.cos(rad);
+                this.y = cy + r * Math.sin(rad);
+                this.size = getRandom(2 * devicePixelRatio, 7 * devicePixelRatio);
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.fillStyle = '#5445544d';
+                ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+
+            moveTo(tx, ty) {
+                const time = 500;
+                const startX = this.x;
+                const startY = this.y;
+                const xSpeed = (tx - startX) / time;
+                const ySpeed = (ty - startY) / time;
+                const startTime = Date.now();
+
+                const _move = () => {
+                    const t = Date.now() - startTime;
+                    const x = xSpeed * t + startX;
+                    const y = ySpeed * t + startY
+                    this.x = x;
+                    this.y = y;
+                    if (t > time) {
+                        this.x = tx;
+                        this.y = ty;
+                        return;
+                    }
+                    // 慢慢的移动
+                    requestAnimationFrame(_move);
+                }
+                _move();
+            }
+        }
+
+        const particles = [];
+
+        // for (let i = 0; i < 1000; i++) {
+        //     particles.push(new Particle());
+        // }
+
+        // const p = new Particle();
+        // particles.push(p);
+
+
+        function draw() {
+            ctx.clearRect(0, 0, cavas.width, cavas.height);
+            update();
+            particles.forEach(p => p.draw());
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+
+        function getText() {
+            return new Date().toTimeString().substring(0, 8);
+        }
+
+        function update() {
+            const newT = getText();
+            const {
+                width,
+                height
+            } = cavas;
+            if (newT === text) {
+                return;
+            }
+            text = newT;
+            // 画文本
+            ctx.fillStyle = '#000';
+            ctx.textBaseline = 'middle';
+            ctx.font = `${140 * devicePixelRatio}px 'DS-Digital', san-serif`;
+            ctx.measureText(text).width;
+            ctx.fillText(text, (width - ctx.measureText(text).width) / 2, height / 2);
+            const points = getPoints();
+            ctx.clearRect(0, 0, cavas.width, cavas.height);
+            for (let i = 0; i < points.length; i++) {
+                let p = particles[i];
+                if (!p) {
+                    p = new Particle();
+                    particles.push(p);
+                }
+                const [x, y] = points[i];
+                p.moveTo(x, y);
+            }
+            if (points.length < particles.length) {
+                particles.splice(points.length)
+            }
+        }
+
+        function getPoints() {
+            const {
+                width,
+                height,
+                data
+            } = ctx.getImageData(0, 0, cavas.width, cavas.height);
+            const points = [];
+            const gap = 4;
+            for (let i = 0; i < width; i += gap) {
+                for (let j = 0; j < height; j += gap) {
+                    const index = (i + j * width) * 4;
+                    const r = data[index];
+                    const g = data[index + 1];
+                    const b = data[index + 2];
+                    const a = data[index + 3];
+                    if (r === 0 && g === 0 && b === 0 && a === 255) {
+                        // console.log(r, g, b, a);
+                        points.push([
+                            i,
+                            j
+                        ]);
+                    }
+                }
+            }
+            return points;
+        }
+    </script>
+</body>
+
+</html>

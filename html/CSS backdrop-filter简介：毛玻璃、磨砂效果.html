@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS backdrop-filter简介：毛玻璃、磨砂效果</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        .div {
+            display: inline-block;
+            margin-left: 50px;
+            position: relative;
+        }
+
+        p {
+            text-align: center;
+            color: pink;
+            display: block;
+            height: 50px;
+            line-height: 50px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .p1 {
+            backdrop-filter: blur(10px);
+        }
+
+        .p2 {
+            backdrop-filter: brightness(60%);
+        }
+
+        .p3 {
+            backdrop-filter: contrast(40%);
+        }
+
+        .p4 {
+            backdrop-filter: drop-shadow(4px 4px 10px blue);
+        }
+
+        .p5 {
+            backdrop-filter: grayscale(30%);
+        }
+
+        .p6 {
+            backdrop-filter: hue-rotate(120deg);
+        }
+
+        .p7 {
+            backdrop-filter: invert(70%);
+        }
+
+        .p8 {
+            backdrop-filter: opacity(20%);
+        }
+
+        .p9 {
+            backdrop-filter: sepia(90%);
+        }
+
+        .p10 {
+            backdrop-filter: saturate(80%);
+        }
+    </style>
+</head>
+
+<body>
+    <h2>1. 原图</h2>
+    <div class="div">
+        <img src="../images/1.jpg" alt="">
+        <p>我就是用来测试的一段文字</p>
+    </div>
+    <h2>2. blur 模糊</h2>
+    <div class="div"><img src="../images/1.jpg" alt="">
+        <p class="p1">我就是用来测试的一段文字</p>
+    </div>
+    <h2>3. brightness 亮度</h2>
+    <div class="div"><img src="../images/1.jpg" alt="">
+        <p class="p2">我就是用来测试的一段文字</p>
+    </div>
+    <h2>4. contrast 对比度</h2>
+    <div class="div"><img src="../images/1.jpg" alt="">
+        <p class="p3">我就是用来测试的一段文字</p>
+    </div>
+    <h2>5. drop-shadow 投影</h2>
+    <div class="div"><img src="../images/1.jpg" alt="">
+        <p class="p4">我就是用来测试的一段文字</p>
+    </div>
+    <h2>6. grayscale 灰度</h2>
+    <div class="div"><img src="../images/1.jpg" alt="">
+        <p class="p5">我就是用来测试的一段文字</p>
+    </div>
+    <h2>7. hue-rotate 色调变化</h2>
+    <div class="div"><img src="../images/1.jpg" alt="">
+        <p class="p6">我就是用来测试的一段文字</p>
+    </div>
+    <h2>8. invert 反向</h2>
+    <div class="div"><img src="../images/1.jpg" alt="">
+        <p class="p7">我就是用来测试的一段文字</p>
+    </div>
+    <h2>9. opacity 透明度</h2>
+    <div class="div"><img src="../images/1.jpg" alt="">
+        <p class="p8">我就是用来测试的一段文字</p>
+    </div>
+    <h2>10. sepia 饱和度</h2>
+    <div class="div"><img src="../images/1.jpg" alt="">
+        <p class="p9">我就是用来测试的一段文字</p>
+    </div>
+    <h2>11. saturate 褐色</h2>
+    <div class="div"><img src="../images/1.jpg" alt="">
+        <p class="p10">我就是用来测试的一段文字</p>
+    </div>
+</body>
+
+</html>

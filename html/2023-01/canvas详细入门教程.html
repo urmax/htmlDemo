@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas详细入门教程</title>
+    <style>
+        .body {
+            text-align: center;
+            padding-top: 50px;
+        }
+        .canvas {
+            box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
+        }
+    </style>
+</head>
+<body class="body">
+    <!-- 图片例子1 -->
+    <!-- <canvas class="canvas">你的浏览器不支持canvas，快去升级浏览器吧！</canvas> -->
+
+    <!-- 图片例子2 -->
+    <!-- <canvas class="canvas" width="800" height="400">你的浏览器不支持canvas，快去升级浏览器吧！</canvas> -->
+
+    <!-- 图片例子3 -->
+    <canvas class="canvas" id="canvas1" width="700" height="600">你的浏览器不支持canvas，快去升级浏览器吧！</canvas>
+    <script>
+        // 我们现在要使用JS获得这个canvas标签的DOM对象：
+        const canvas = document.getElementById('canvas1');
+        const ctx = canvas.getContext('2d');
+        //  线段
+        // 画线段的简单
+        // ctx.moveTo(100, 300); // 起点
+        // ctx.lineTo(500, 300); // 终点
+        // ctx.stroke(); // 使用线条绘制起点和终点
+
+        // 画多条线段
+        // ctx.moveTo(100, 300); // 起点
+        // ctx.lineTo(500, 300); // 终点
+        // ctx.lineTo(500, 200); // 终点
+        // ctx.stroke(); // 使用线条绘制起点和终点
+
+        // ctx.moveTo(100, 500); // 起点
+        // ctx.lineTo(500, 500); // 终点
+        // ctx.stroke(); // 使用线条绘制起点和终点
+
+        // 画线段的设置线宽
+        // ctx.moveTo(100, 300); // 起点
+        // ctx.lineTo(500, 300); // 终点
+        // ctx.lineWidth = 10; // 设置线宽为10像素
+        // ctx.stroke(); // 使用线条绘制起点和终点
+
+        // 两条线段分别设置样式
+        // ctx.beginPath()
+        // ctx.moveTo(200, 200)
+        // ctx.lineTo(500, 200)
+        // ctx.strokeStyle = 'skyblue' // 设置为天蓝色
+        // ctx.lineWidth = 20
+        // ctx.lineCap = 'round'
+        // ctx.stroke()
+        // ctx.closePath()
+
+        // // 绘制第二条线：
+        // ctx.beginPath()
+        // ctx.moveTo(200, 300)
+        // ctx.lineTo(500, 300)
+        // ctx.strokeStyle = 'red'
+        // ctx.lineWidth = 20
+        // ctx.lineCap = 'round'
+        // ctx.stroke()
+        // ctx.closePath()
+
+        // 三角形
+        // ctx.beginPath()
+        // ctx.moveTo(100, 300); // 起点
+        // ctx.lineTo(500, 300);
+        // ctx.lineTo(300, 100);
+        // // ctx.lineTo(100, 300); // 这个可以不要啦
+        // ctx.closePath()
+        // ctx.strokeStyle = 'pink'
+        // ctx.lineWidth = 20
+        // ctx.stroke(); // 使用线条绘制起点和终点
+
+        // 矩形 1
+        // ctx.beginPath()
+        // ctx.moveTo(200, 150)
+        // ctx.lineTo(500, 150)
+        // ctx.lineTo(500, 450)
+        // ctx.lineTo(200, 450)
+        // ctx.closePath()
+        // ctx.stroke()
+
+        // 矩形2
+        // ctx.beginPath()
+        // ctx.strokeRect(200, 150, 300, 300) // 起点为(200,150)，宽300像素，高300像素
+        // ctx.closePath()
+
+        // 实心矩形
+        // ctx.beginPath()
+        // ctx.fillStyle = 'pink' // 填充颜色一定要写在生成矩形（fillRect()）之前，否则颜色不生效
+        // ctx.fillRect(200, 150, 300, 300) // 起点为(200,150)，宽300像素，高300像素
+        // ctx.closePath()
+
+        // 圆
+        // ctx.beginPath()
+        // ctx.arc(350, 300, 150, 0, [(Math.PI) / 180] * 360) // 不写anticlockwise项的话默认为顺时针
+        // ctx.stroke() // 如果此处改为使用fill()方法，那么将会绘制出填充的圆
+
+        // 逆时针画个圆弧
+        // ctx.beginPath()
+        // ctx.arc(350, 300, 150, 0, [(Math.PI) / 180] * 30, true) // (Math.PI) / 180 === 1°
+        // ctx.stroke()
+
+        // 圆和线段
+        // ctx.beginPath()
+        // ctx.arc(350, 300, 150, [(Math.PI) / 180] * 30, [(Math.PI) / 180] * 330)
+        // ctx.lineTo(350, 300)
+        // ctx.closePath() // 用于连接首尾点
+        // ctx.stroke()
+
+        // arcTo圆
+        // ctx.moveTo(200, 300) // 定义线段的起点
+        // ctx.arcTo(400, 100, 400, 500, 100) // 切线交点坐标为(400,100)，结束点为(400,500)
+        // ctx.lineWidth = 2
+        // ctx.stroke()
+
+        // 椭圆
+        // ctx.ellipse(350, 300, 100, 200, [(Math.PI) / 180] * 60, [(Math.PI) / 180] * 0, [(Math.PI) / 180] * 360, false)
+        // ctx.stroke()
+
+        // 虚线
+        // ctx.beginPath()
+        // ctx.lineWidth = 10
+        // ctx.strokeStyle = 'pink'
+        // ctx.moveTo(200, 200)
+        // ctx.lineTo(500, 200)
+        // ctx.setLineDash([10])
+        // ctx.stroke()
+        // ctx.beginPath()
+        // ctx.moveTo(200, 300)
+        // ctx.lineTo(500, 300)
+        // ctx.setLineDash([10, 30])
+        // ctx.stroke()
+        // ctx.beginPath()
+        // ctx.moveTo(200, 400)
+        // ctx.lineTo(500, 400)
+        // ctx.setLineDash([10, 30, 5])
+        // ctx.stroke()
+
+        // 绘制文本
+        // ctx.font = '50px Verdana'
+        // // ctx.strokeText('Hello world!', 180, 320, 400)
+        // ctx.fillText('Hello world!', 180, 320, 400)
+
+        // 渐变色
+        // var gradient = ctx.createLinearGradient(0, 0, 700, 0);
+        // gradient.addColorStop(0.5, "pink"); // 第一个偏移值为0
+        // gradient.addColorStop(1, "blue"); // 第一个偏移值为1
+        // ctx.beginPath()
+        // ctx.fillStyle = gradient
+        // ctx.fillRect(0, 0, 700, 600)
+        // ctx.fill()
+
+        // 添加图片
+        // 创建一个 image对象:
+        // var img = new Image();
+        // // 绑定图片的src:
+        // img.src = "../../images/1.jpg";
+        // // 当图片加载完之后运行：
+        // img.onload = function () {
+        //     // 创建图案:
+        //     var ptrn = ctx.createPattern(img, 'no-repeat'); 
+        //     ctx.fillStyle = ptrn;
+        //     ctx.fillRect(0, 0, 700, 600);
+        // }
+
+        // 阴影样式
+        // 绘制一条带阴影的线段：
+        // ctx.moveTo(100, 100)
+        // ctx.lineTo(600, 100)
+        // ctx.shadowOffsetX = 10 // 向x轴正方向平移10像素
+        // ctx.shadowOffsetY = 10 // 向y轴正方向平移10像素
+        // ctx.shadowColor = 'blue' // 设置阴影颜色
+        // ctx.shadowBlur = 3 // 设置阴影模糊度
+        // ctx.lineWidth = 6
+        // ctx.stroke()
+        // // 绘制一个带阴影的矩形：
+        // ctx.fillRect(100, 150, 100, 50)
+        // // 绘制带阴影的文本：
+        // ctx.lineWidth = 1
+        // ctx.font = '50px Verdana'
+        // ctx.strokeText('Hello!', 300, 190, 400)
+        // // 绘制带阴影的圆：
+        // ctx.beginPath()
+        // ctx.shadowOffsetX = -20 // 向x轴负方向平移20像素
+        // ctx.shadowOffsetY = -20 // 向y轴负方向平移20像素
+        // ctx.shadowColor = 'pink' // 设置阴影颜色为天蓝色
+        // ctx.shadowBlur = 9 // 设置阴影模糊度
+        // ctx.lineWidth = 5
+        // ctx.arc(350, 400, 100, 0, [(Math.PI) / 180] * 360)
+        // ctx.stroke()
+
+        // 绘制图片
+        // 创建一个图片对象：
+        var img = new Image();
+        img.src = '../../images/1.jpg';
+        // 图片加载完成之后绘制图片：
+        // img.onload = function () {
+        //     ctx.drawImage(img, 101, 101); // 在(101,101)处绘制原图
+        // }
+        img.onload = function () {
+            ctx.drawImage(img, 100, 100, 300, 300, 0, 0, 500, 500); // 在(100,100)处向右下方裁剪300×300像素的被拉成500×500像素的图片
+        }
+    </script>
+</body>
+</html>

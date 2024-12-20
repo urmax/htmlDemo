@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>大乐透模拟选号</title>
+    <style>
+      /* 页面基本样式 */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        text-align: center;
+      }
+
+      /* 大乐透号码展示区域 */
+      .lottery-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 50px;
+      }
+
+      .lottery-ticket {
+        border: 2px solid #006fcf;
+        border-radius: 10px;
+        padding: 20px;
+        background-color: white;
+        width: 300px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .ticket-header {
+        font-size: 1.5em;
+        color: #006fcf;
+        margin-bottom: 10px;
+      }
+
+      .ticket-body {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .number-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: ½em;
+      }
+
+      .number {
+        font-size: 1.2em;
+        font-weight: bold;
+        background-color: #006fcf;
+        color: white;
+        border-radius: ¾em;
+        padding: 0 0.5em;
+        line-height: 1;
+        margin-bottom: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 onClick="jixuan()">大乐透模拟选号(点击这里可以更换一组)</h1>
+    <div class="lottery-container"></div>
+    <script>
+      // JavaScript 部分：生成随机号码并渲染到页面上
+
+      function generateRandomNumber(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      function createLotteryTicket() {
+        const ticket = document.createElement('div');
+        ticket.classList.add('lottery-ticket');
+
+        const header = document.createElement('div');
+        header.classList.add('ticket-header');
+        header.textContent = '模拟选号';
+        ticket.appendChild(header);
+
+        const body = document.createElement('div');
+        body.classList.add('ticket-body');
+
+        const frontNumbers = document.createElement('div');
+        frontNumbers.classList.add('number-group');
+        for (let i = 0; i < 5; i++) {
+          const number = document.createElement('span');
+          number.classList.add('number');
+          number.textContent = generateRandomNumber(1, 35);
+          frontNumbers.appendChild(number);
+        }
+
+        const backNumbers = document.createElement('div');
+        backNumbers.classList.add('number-group');
+        for (let i = 0; i < 2; i++) {
+          const number = document.createElement('span');
+          number.classList.add('number');
+          number.textContent = generateRandomNumber(1, 12);
+          backNumbers.appendChild(number);
+        }
+
+        body.appendChild(frontNumbers);
+        body.appendChild(backNumbers);
+        ticket.appendChild(body);
+
+        return ticket;
+      }
+
+      // const lotteryContainer = document.querySelector('.lottery-container');
+      // for (let i = 0; i < 5; i++) {
+      //   lotteryContainer.appendChild(createLotteryTicket());
+      // }
+
+      function jixuan() {
+        const lotteryContainer = document.querySelector('.lottery-container');
+        lotteryContainer.innerHTML = '';
+        for (let i = 0; i < 5; i++) {
+          lotteryContainer.appendChild(createLotteryTicket());
+        }
+      }
+
+      jixuan();
+    </script>
+  </body>
+</html>

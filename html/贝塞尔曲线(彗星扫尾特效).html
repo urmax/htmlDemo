@@ -1,0 +1,214 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>
+            贝塞尔曲线(彗星扫尾特效)
+		</title>
+		<style type="text/css">
+			html, body { padding: 0; margin: 0; } canvas { border: 1px solid red;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas" width="800" height="600">
+		</canvas>
+		<script type="text/javascript">
+			function Point(x, y) {
+				this.x = x;
+				this.y = y;
+			}
+			Point.prototype.toString = function() {
+				return '(' + this.x + ', ' + this.y + ')';
+			}
+			/**
+             * @param poss      贝塞尔曲线控制点坐标:Array<Point>
+             * @param precision 精度，需要计算的该条贝塞尔曲线上的点的数目:number
+             * @return 该条贝塞尔曲线上的点（二维坐标）
+             */
+			function bezierCalculate(poss, precision) {
+				//维度，坐标轴数（二维坐标，三维坐标...）
+				var dimersion = 2;
+				//贝塞尔曲线控制点数（阶数）
+				var number = poss.length;
+				//控制点数不小于 2 ，至少为二维坐标系
+				if (number < 2 || dimersion < 2) return null;
+				var result = new Array();
+				//计算杨辉三角
+				var mi = new Array();
+				mi[0] = mi[1] = 1;
+				for (var i = 3; i <= number; i++) {
+					var t = new Array();
+					for (var j = 0; j < i - 1; j++) {
+						t[j] = mi[j];
+					}
+ 
+					mi[0] = mi[i - 1] = 1;
+					for (var j = 0; j < i - 2; j++) {
+						mi[j + 1] = t[j] + t[j + 1];
+					}
+				}
+ 
+				//计算坐标点
+				for (var i = 0; i < precision; i++) {
+					var t = i / precision;
+					var p = new Point(0, 0);
+					result.push(p);
+					for (var j = 0; j < dimersion; j++) {
+						var temp = 0.0;
+						for (var k = 0; k < number; k++) {
+							temp += Math.pow(1 - t, number - k - 1) * (j == 0 ? poss[k].x: poss[k].y) * Math.pow(t, k) * mi[k];
+						}
+						j == 0 ? p.x = temp: p.y = temp;
+					}
+				}
+ 
+				return result;
+			}
+ 
+			var canvas = document.getElementById('canvas');
+			var ctx = canvas.getContext('2d');
+			var cwidth = canvas.width;
+			var cheight = canvas.height;
+ 
+			//定义一条带贝塞尔曲线的路径
+			var line1cp = new Array();
+			line1cp.push(new Point(10, 300));//路径起点
+            line1cp.push(new Point(11, 300));//平滑点位分布用
+            line1cp.push(new Point(13, 300));//平滑点位分布用
+            line1cp.push(new Point(15, 300));//平滑点位分布用
+            line1cp.push(new Point(18, 300));//平滑点位分布用
+			line1cp.push(new Point(50 + 50, 300));//平滑点位分布用
+			line1cp.push(new Point(50 + 100, 300));//平滑点位分布用
+			line1cp.push(new Point(50 + 150, 300));//平滑点位分布用
+			line1cp.push(new Point(50 + 200, 300));//起点到当前点是直线部分，同时也是第一个弯角控制点1（如果觉得点位分布不够平滑，可在此之前额外加一些点来绘制直线部分）
+			line1cp.push(new Point(50 + 250, 300));
+            line1cp.push(new Point(50 + 300, 300));
+            line1cp.push(new Point(50 + 350, 300));
+            line1cp.push(new Point(50 + 350, 300));
+            line1cp.push(new Point(50 + 350, 300));
+            line1cp.push(new Point(50 + 350, 300));
+            line1cp.push(new Point(400, 299));
+            line1cp.push(new Point(400, 299));
+            line1cp.push(new Point(400, 298));
+            line1cp.push(new Point(400, 295));
+            line1cp.push(new Point(400, 290));
+            line1cp.push(new Point(400, 280));
+            line1cp.push(new Point(400, 250));
+            line1cp.push(new Point(400, 200));
+            line1cp.push(new Point(400, 150));
+            line1cp.push(new Point(400, 100));
+            line1cp.push(new Point(400, 100));
+            line1cp.push(new Point(400, 100));
+            line1cp.push(new Point(400, 100));
+            line1cp.push(new Point(400, 100));
+            line1cp.push(new Point(399, 100));
+            line1cp.push(new Point(398, 100));
+            line1cp.push(new Point(397, 100));
+            line1cp.push(new Point(395, 100));
+            line1cp.push(new Point(390, 100));
+            line1cp.push(new Point(350, 100));
+            line1cp.push(new Point(300, 100));
+            line1cp.push(new Point(250, 100));
+            line1cp.push(new Point(200, 100));
+            line1cp.push(new Point(150, 100));
+            line1cp.push(new Point(100, 100));
+            line1cp.push(new Point(50, 100));
+            line1cp.push(new Point(10, 100));
+            line1cp.push(new Point(10, 100));
+            line1cp.push(new Point(10, 100));
+            line1cp.push(new Point(10, 100));
+            line1cp.push(new Point(10, 101));
+            line1cp.push(new Point(10, 102));
+            line1cp.push(new Point(10, 105));
+            line1cp.push(new Point(10, 110));
+            line1cp.push(new Point(10, 150));
+            line1cp.push(new Point(10, 200));
+            line1cp.push(new Point(10, 250));
+            line1cp.push(new Point(10, 300));
+            line1cp.push(new Point(11, 300));//平滑点位分布用
+
+
+            // line1cp.push(new Point(100 + 200, 250));//第一个弯角曲线的控制点2
+			// line1cp.push(new Point(100 + 200, 200));//第一个弯角曲线的控制点3
+			// line1cp.push(new Point(100 + 200, 100));//第一个弯角曲线的控制点3到当前点是直线部分，同时也是第二个弯角控制点1
+			// line1cp.push(new Point(100 + 200, 50));//第二个弯角控制点2
+			// line1cp.push(new Point(150 + 200, 50));//第二个弯角控制点3
+			// line1cp.push(new Point(150 + 250, 50));//平滑点位分布用
+			// line1cp.push(new Point(150 + 300, 50));//路径终点
+ 
+			var line1 = bezierCalculate(line1cp, 300);//得到上述路径上的N个点来近似描述该矢量路径
+ 
+			///regin#以下代码将在canvas上绘制路径和实现动画效果
+			//所谓彗星效果就是一组以路径上点为圆心的圆，彗星拖长短取决于存放彗星构成点的数组大小
+			var bubbleNum = 0,
+			t = 0;
+			//小球运动轨迹信息数组
+			var bubbles = [{
+					a: 1,//透明度
+					s: 1,//圆尺寸
+					x: 1,//圆心X坐标
+					y: 1//圆心Y坐标
+			}];
+			//循环彗星动画方法
+			function draw() {
+				t++;
+				bubbleNum++;
+				//清空画布
+				ctx.clearRect(0, 0, 5000, 5000);
+				//定义路径线段粗细
+				ctx.lineWidth = 2;
+				//定义画笔的颜色
+				ctx.strokeStyle = 'white'
+				//画出前面定义的路径（采用点与点之间直线连接，模拟实现路径，只要点与点之间距离不大于一个像素，就可以真实模拟）
+				ctx.beginPath();
+				for (var l1 = 0; l1 < line1.length - 1; l1++) {
+					ctx.moveTo(line1[l1].x, line1[l1].y);
+					ctx.lineTo(line1[l1 + 1].x, line1[l1 + 1].y);
+				}
+				ctx.stroke();
+				//以下代码将绘制彗星
+				//首先，如果彗星数组元素超过50，则移除最早加进来的坐标，保持彗星长度为50
+				if (bubbleNum > 50) {
+					bubbles.shift()
+				}
+				
+				//更新当前彗星数组中的透明度和圆尺寸定义
+				for (var i = 0; i < bubbles.length; i++) {
+					bubbles[i].a = (i + 1) * 0.05;
+					bubbles[i].s = (i + 1) * 0.03;
+				}
+				//获取当前的贝塞尔曲线坐标
+				var x = line1[t].x;
+				var y = line1[t].y;
+				var b = {
+					a: 1,//透明度
+					s: 1,//圆尺寸
+					x: x,//圆心X坐标
+					y: y//圆心Y坐标
+				};
+				//将取到的下一个彗星头部加入到彗星数据定义中
+				bubbles.push(b);
+				//渲染彗星定义数据
+				for (var j = 0; j < bubbles.length; j++) {
+					var b = bubbles[j];
+					ctx.save();
+					ctx.beginPath();
+					ctx.globalAlpha = b.a; // 值是0-1,0代表完全透明，1代表完全不透明
+					ctx.fillStyle = 'greenyellow';
+					ctx.arc(b.x, b.y, b.s * 4, 0, 2 * Math.PI, false);
+					ctx.fill();
+					ctx.restore();
+				}
+				//若彗星移动到了路径末尾则从头开始
+				if (t == line1.length - 1) {
+					t = 0;
+				}
+				requestAnimationFrame(draw);
+			}
+			//开始绘制canvas
+			draw();
+		</script>
+	</body>
+ 
+</html>

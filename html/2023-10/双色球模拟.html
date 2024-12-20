@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onClick="jixuan()">开始机选</button>
+    <div id="id0"></div>
+    <div id="id1"></div>
+    <div id="id2"></div>
+    <div id="id3"></div>
+    <div id="id4"></div>
+  </body>
+  <script>
+    // 生成随机的红球号码
+    function generateRedBalls() {
+      let redBalls = [];
+      for (let i = 1; i <= 33; i++) {
+        redBalls.push(i);
+      }
+
+      let selectedRedBalls = [];
+      for (let i = 0; i < 6; i++) {
+        const randomIndex = Math.floor(Math.random() * redBalls.length);
+        const selectedBall = redBalls.splice(randomIndex, 1)[0];
+        selectedRedBalls.push(selectedBall);
+      }
+
+      return selectedRedBalls;
+    }
+
+    // 生成随机的篮球号码
+    function generateBlueBall() {
+      const blueBalls = [];
+      for (let i = 1; i <= 16; i++) {
+        blueBalls.push(i);
+      }
+
+      const randomIndex = Math.floor(Math.random() * blueBalls.length);
+      const selectedBall = blueBalls[randomIndex];
+      return selectedBall;
+    }
+
+    // 生成五注双色球号码
+    function generateFiveSetsOfLottery() {
+      const lotteryNumbers = [];
+
+      for (let i = 0; i < 5; i++) {
+        const redBalls = generateRedBalls();
+        const blueBall = generateBlueBall();
+        const lottery = {
+          redBalls: redBalls.sort((a, b) => a - b), // 红球按升序排列
+          blueBall: blueBall
+        };
+        lotteryNumbers.push(lottery);
+      }
+
+      return lotteryNumbers;
+    }
+
+    // 生成五注双色球号码
+    // const fiveSetsOfLottery = generateFiveSetsOfLottery();
+
+    // // 打印输出五注双色球号码
+    // for (let i = 0; i < 5; i++) {
+    //   const lottery = fiveSetsOfLottery[i];
+    //   // console.log(`第 ${i+1} 注：红球 ${lottery.redBalls.join(' ')}，篮球 ${lottery.blueBall}`);
+    //   document.getElementById('id' + i).innerHTML = `第 ${i + 1} 注：红球 ${lottery.redBalls.join(' ')}，篮球 ${lottery.blueBall}`;
+    // }
+
+    function jixuan() {
+      // 生成五注双色球号码
+      const fiveSetsOfLottery = generateFiveSetsOfLottery();
+
+      // 打印输出五注双色球号码
+      for (let i = 0; i < 5; i++) {
+        const lottery = fiveSetsOfLottery[i];
+        // console.log(`第 ${i+1} 注：红球 ${lottery.redBalls.join(' ')}，篮球 ${lottery.blueBall}`);
+        document.getElementById('id' + i).innerHTML = `第 ${i + 1} 注：红球 ${lottery.redBalls.join(' ')}，篮球 ${lottery.blueBall}`;
+      }
+    }
+  </script>
+</html>

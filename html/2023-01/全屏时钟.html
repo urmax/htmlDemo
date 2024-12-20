@@ -1,0 +1,82 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时钟</title>
+    <style>
+        body{
+            background: black;
+            overflow: hidden;
+        }
+        #timer{
+            text-align: center;
+            font-size:55vh;
+            font-weight: bold;
+            line-height: 56vh;
+            color:#232427;
+        }
+        #date{
+            margin-top:0px;
+            text-align: center;
+            font-size:20vh;
+            font-weight: bold;
+            color:#232427;
+        }
+
+        #yk{
+            text-align: center;
+            font-size:10vh;
+            font-weight: bold;
+            color:#232427;
+        }
+
+        .about{
+            width:600px;
+            margin:0 auto;
+            padding-top:20px;
+            display: flex;
+            align-items : center;
+            
+        }
+        .about .item{
+            color:white;
+            flex:1;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    </div>
+    <div id="yk">马上回来...有急事请微信联系</div>
+    <div id="date">00月00日</div>
+    <div id="timer">06:12</div>
+
+    <script>
+        let showSymbl = true
+        function clock(){
+            let now = new Date()
+            let hour = now.getHours()+''
+            let minute = now.getMinutes() + ''
+            let month = (now.getMonth()+1)+''
+            let day = now.getDate()+''
+            if(showSymbl){
+                document.getElementById('timer').innerHTML = `${hour.padStart(2,'0')}<span>:</span>${minute.padStart(2,'0')}`
+
+            }else{
+                document.getElementById('timer').innerHTML = `${hour.padStart(2,'0')}<span style="color:#0d1320">:</span>${minute.padStart(2,'0')}`
+            }
+            document.getElementById('date').innerHTML = `${month.padStart(2,'0')}月${day.padStart(2,'0')}日`
+
+            showSymbl = !showSymbl
+        }
+        clock()
+        setInterval(()=>{
+            clock()
+        },1000)
+    </script>
+</body>
+</html>

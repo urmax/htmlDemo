@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>使用内部元素旋转达到动态边框特效</title>
+		<style>
+			body{
+				background-color: black;
+			}
+			.box{
+				position: relative;
+				width: 100px;
+				height: 100px;
+				margin: 50px auto;
+				background-color: black;
+				overflow: hidden;
+				/*border: 1px solid blue;*/
+			}
+			.son1{
+				width: 150px;
+				height: 50px;
+				/*background-color: red;*/
+				background-image: linear-gradient(#000, #fff);
+				transform: translate(50px, 25px);
+				transform-origin: 0px 25px;
+				animation: move 5s linear infinite;
+			}
+			@keyframes move {
+				0%{
+					transform: translate(50px, 25px) rotate(0deg);
+				}
+				100%{
+					transform: translate(50px, 25px) rotate(360deg);
+				}
+			}
+			.son2{
+				position: absolute;
+				width: 96px;
+				height: 96px;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+				background-color: black;
+
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div class="son1"></div>
+			<div class="son2"></div>
+			<div class="son3"></div>
+		</div>
+		
+		<script>
+			
+		</script>
+	</body>
+</html>

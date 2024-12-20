@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用daterangepicker日期选择插件</title>
+    <link rel="stylesheet" href="../lib/css/daterangepicker3.14.1.css">
+</head>
+<body>
+    <p>一、单日期格式</p>
+    <input class="date-pickers" type="text" placeholder="年-月-日" readonly />
+    <p>二、多日期格式</p>
+    <input class="date-pickers2" type="text" placeholder="年-月-日 至 年-月-日" readonly />
+    <p>三、多日期格式不带默认值</p>
+    <input class="date-pickers3" type="text" placeholder="年-月-日 至 年-月-日" readonly />
+    <p>四、多日期格式不带默认值(两个input框版本)</p>
+    <div class="date-pickers4 input">
+        <input class="yydh-input yydh-inputv1" type="text" placeholder="年-月-日" readonly="readonly" />
+        <span class="yydhspan">至</span>
+        <input class="yydh-input yydh-inputv2" type="text" placeholder="年-月-日" readonly="readonly" />
+    </div>
+    <script type="text/javascript" src="../lib/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../lib/js/moment2.18.1.min.js"></script>
+    <script type="text/javascript" src="../lib/js/daterangepicker3.1.min.js"></script>
+    <script>
+        $(function() {
+            $('.date-pickers').daterangepicker({
+                locale: {
+                    "format": 'YYYY-MM-DD',
+                    "separator": " - ",
+                    "applyLabel": "确定",
+                    "cancelLabel": "取消",
+                    "resetLabel": "重置",
+                    "fromLabel": "起始时间",
+                    "toLabel": "结束时间'",
+                    "customRangeLabel": "自定义",
+                    "weekLabel": "W",
+                    "daysOfWeek": ["日", "一", "二", "三", "四", "五", "六"],
+                    "monthNames": ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                    "firstDay": 1,
+                    "showDropdowns": true,
+                    
+                },
+                "singleDatePicker":true,
+                "alwaysShowCalendars": true,
+                "showDropdowns": true,
+                "startDate": moment().subtract(6, 'days'),  //7天前
+                "endDate": new Date(),                      //现在
+                "opens": "right",
+                "linkedCalendars": false,
+                "maxDate": new Date(),
+            })
+            // 点击取消
+            $('.date-pickers').on('cancel.daterangepicker', function(ev, picker) {
+                $('.date-pickers').val('');
+            });
+            // 点击确定
+            $('.date-pickers').on('apply.daterangepicker', function(ev, picker) {
+                console.log(picker.endDate.format('YYYY-MM-DD'));
+            });
+
+            $('.date-pickers2').daterangepicker({
+                locale: {
+                    "format": 'YYYY-MM-DD',
+                    "separator": " 至 ",
+                    "applyLabel": "确定",
+                    "cancelLabel": "取消",
+                    "resetLabel": "重置",
+                    "fromLabel": "起始时间",
+                    "toLabel": "结束时间'",
+                    "customRangeLabel": "自定义",
+                    "weekLabel": "W",
+                    "daysOfWeek": ["日", "一", "二", "三", "四", "五", "六"],
+                    "monthNames": ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                    "firstDay": 1,
+                },
+                "showDropdowns": true,
+                "singleDatePicker":false,
+                "alwaysShowCalendars": true,
+                "startDate": moment().subtract(6, 'days'),  //7天前
+                "endDate": new Date(),                      //现在
+                "opens": "right",
+                "linkedCalendars": false,
+                "maxDate": new Date(),
+            })
+            // 点击取消
+            $('.date-pickers2').on('cancel.daterangepicker', function(ev, picker) {
+                $('.date-pickers2').val('');
+            });
+            // 点击确定
+            $('.date-pickers2').on('apply.daterangepicker', function(ev, picker) {
+                console.log(picker.startDate.format('YYYY-MM-DD'));
+                console.log(picker.endDate.format('YYYY-MM-DD'));
+            });
+
+            $('.date-pickers3').daterangepicker({
+                locale: {
+                    "format": 'YYYY-MM-DD',
+                    "separator": " 至 ",
+                    "applyLabel": "确定",
+                    "cancelLabel": "取消",
+                    "resetLabel": "重置",
+                    "fromLabel": "起始时间",
+                    "toLabel": "结束时间'",
+                    "customRangeLabel": "自定义",
+                    "weekLabel": "W",
+                    "daysOfWeek": ["日", "一", "二", "三", "四", "五", "六"],
+                    "monthNames": ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                    "firstDay": 1,
+                },
+                "autoUpdateInput": false,
+                "showDropdowns": true,
+                "singleDatePicker":false,
+                "alwaysShowCalendars": true,
+                "startDate": moment().subtract(6, 'days'),  //7天前
+                "endDate": new Date(),                      //现在
+                "opens": "right",
+                "linkedCalendars": false,
+                "maxDate": new Date(),
+            })
+            // 点击取消
+            $('.date-pickers3').on('cancel.daterangepicker', function(ev, picker) {
+                $('.date-pickers3').val('');
+            });
+            // 点击确定
+            $('.date-pickers3').on('apply.daterangepicker', function(ev, picker) {
+                $('.date-pickers3').data('daterangepicker').autoUpdateInput=true;
+                console.log(picker.startDate.format('YYYY-MM-DD'));
+                console.log(picker.endDate.format('YYYY-MM-DD'));
+            });
+
+            $('.date-pickers4').daterangepicker({
+                locale: {
+                    "format": 'YYYY-MM-DD',
+                    "separator": " 至 ",
+                    "applyLabel": "确定",
+                    "cancelLabel": "取消",
+                    "resetLabel": "重置",
+                    "fromLabel": "起始时间",
+                    "toLabel": "结束时间'",
+                    "customRangeLabel": "自定义",
+                    "weekLabel": "W",
+                    "daysOfWeek": ["日", "一", "二", "三", "四", "五", "六"],
+                    "monthNames": ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                    "firstDay": 1,
+                },
+                "autoUpdateInput": false,
+                "showDropdowns": true,
+                "singleDatePicker":false,
+                "alwaysShowCalendars": true,
+                "startDate": moment().subtract(6, 'days'),  //7天前
+                "endDate": new Date(),                      //现在
+                "opens": "right",
+                "linkedCalendars": false,
+                "maxDate": new Date(),
+            })
+            // 点击取消
+            $('.date-pickers4').on('cancel.daterangepicker', function(ev, picker) {
+                $('.yydh-inputv1').val('');
+                $('.yydh-inputv2').val('');
+            });
+            // 点击确定
+            $('.date-pickers4').on('apply.daterangepicker', function(ev, picker) {
+                console.log(picker.startDate.format('YYYY-MM-DD'));
+                console.log(picker.endDate.format('YYYY-MM-DD'));
+                $('.yydh-inputv1').val(picker.startDate.format('YYYY-MM-DD'));
+                $('.yydh-inputv2').val(picker.endDate.format('YYYY-MM-DD'));
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>html5新特性总结</title>
+  </head>
+  <body>
+    <h2>HTML5新标签</h2>
+    <h3>8个新语义元素和新属性</h3>
+    <p>header,section,footer,aside,nav,main,article,figure所有的这些元素都是块级元素</p>
+    <h3>新属性</h3>
+    <p>contenteditable， 规定是否可编辑元素的内容</p>
+    <p>contextmenu 指定一个元素的上下文菜单。当用户右击该元素，出现上下文菜单， 只有Firefox浏览器支持</p>
+    <p>data-* 嵌入自定义数据</p>
+    <p>draggable 规定元素是否可拖动。链接和图像默认是可拖动的。经常用它实现拖放操作</p>
+    <p>
+      hidden
+      规定对元素进行隐藏。如果使用该属性，则会隐藏元素，隐藏的元素不会被显示，可以通过js来设置hidden属性为true,使得元素变得可见
+    </p>
+    <h3>nav 标签定义导航链接的部分。</h3>
+    <h3>
+      header标签定义文档的头部区域，它是作为网页的头部介绍内容或者是导航链接栏的容器。在一个文档中，你可以定义多个header元素
+    </h3>
+    <h3>main标签 标签规定文档的主要内容。一个文档中只有一个main元素。</h3>
+    <h3>aside标签定义article标签外的内容。aside的内容应该与附近的内容相关</h3>
+    <h3>section标签定义了文档的某个区域。比如章节、头部、顶部或者文档的其他区域</h3>
+    <h3>article标签</h3>
+    <h3>figure标签规定独立的流内容(图像、图标、照片、代码等)</h3>
+    <h3>
+      footer标签
+      定义文档或者文档一部分区域的页脚。该元素会包含文档闯作业的姓名、文档的版权信息、使用条款的链接、联系信息等等。在一个文档中，可以定义多个footer。
+    </h3>
+    <h2>其它的新语义化标签</h2>
+    <h3>mark</h3>
+    <p>
+      元素用于
+      <mark>高亮</mark>
+      文本
+    </p>
+    <h3>progress</h3>
+    <p>用来显示一项任务的完成进度。有两个属性 max 最大值 value 当前进度</p>
+    <progress value="70" max="100">70 %</progress>
+    <h3>address</h3>
+    <p>个人或者某个组织的联系信息等等</p>
+    <address>
+      <a href="">masterzoe@163.com</a>
+      <br />
+      <a href="">13866666666</a>
+    </address>
+    <h2>新的表单特性</h2>
+    <p>datalist keygen output</p>
+    <h3>datalist</h3>
+    <p>
+      该元素规定输入域的选项列表。规定了form或input应该拥有自动完成功能，都能够用户在自动完成域中开始输入时，浏览器应该在该域中显示填写的选项：
+    </p>
+    <form action="">
+      <input type="text" list="class" />
+      <datalist id="class">
+        <option value="hello world"></option>
+        <option value="hello web"></option>
+        <option value="hello Go"></option>
+        <option value="hello python"></option>
+      </datalist>
+      <input type="submit" />
+    </form>
+    <h3>kegen(了解)</h3>
+    <p>
+      是提供一种验证用户的可靠方法，当提交表达时，会生成两个键，一个是私钥，一个是公钥。
+      私钥存储于客户端，公钥则被发送给服务器。公钥可用于之后验证用户的客户端证书
+    </p>
+    <form action="hello.asp" method="get">
+      用户名: <input type="text" name="usr_name">
+      加密: <keygen name="security">
+      <input type="submit">
+    </form>
+    <h3>output</h3>
+    <p>用于不同类型的输出，比如计算或脚本输出</p>
+    <form oninput="x.value=parseInt(a.value)+parseInt(b.value)">0
+      <input type="range" id="a" value="50">100 +
+      <input type="number" id="b" value="50">=
+      <output name="x" for="a b"></output>
+    </form>
+    <h2>HTML5新的表单属性</h2>
+    <h3>form新属性</h3>
+    <p>autocomplete属性
+
+此属性规定form或input应该拥有自动完成功能
+
+当用户在自动完成域中开始输入时，浏览器应该在该域中显示填写的选项</p>
+<form action="" autocomplete="on">
+    用户名: <input type="text" name="usr_name" >
+    email: <input type="email">
+    <input type="submit">
+</form>
+<h3>novalidate属性</h3>
+<p>是一个布尔值，当为true时，表示规定在提交表单时，不应该验证form或input域
+
+如果给input的type改成email。则我们在输入邮箱时通常自动验证。如图所示</p>
+<form action="" autocomplete="on" novalidate="false">
+    用户名: <input type="text" name="usr_name" >
+    email: <input type="email">
+    <input type="submit">
+</form>
+<h2>新的input属性</h2>
+color : 取色
+date : 日期选择器
+datetime ：选择UTC时间
+datetime-local: 选择一个日期和时间(无时区)
+email：提交表单时。自动验证email的值是否有效
+month：选择月份
+number:输入数值
+range：包含一定范围内数字值的输入域
+search:搜索域
+tel:输入电话号码字段
+time:选择一个时间
+url:输入包含URL地址
+week:选择周和年
+  </body>
+</html>
