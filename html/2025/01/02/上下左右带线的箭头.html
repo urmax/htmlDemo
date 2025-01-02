@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .arrow-container {
+                position: relative;
+                display: inline-block;
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: -15px;
+            }
+
+            .arrow {
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 8px solid #666;
+            }
+
+            .arrow::after {
+                content: '';
+                position: absolute;
+                top: -5px; /* Position it right below the arrowhead */
+                left: 50%;
+                transform: translateX(-50%);
+                width: 2px;
+                height: 10px; /* Length of the line */
+                background-color: #666;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="arrow-container">
+            <div class="arrow"></div>
+        </div>
+    </body>
+</html>

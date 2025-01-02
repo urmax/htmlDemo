@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            ::-webkit-scrollbar {
+                width: 0;
+            }
+
+            body {
+                background-color: #655643;
+            }
+
+            .box {
+                position: relative;
+                width: 90%;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 50px;
+                margin: 68px auto;
+
+                > .item {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        cursor: pointer;
+                        display: block;
+                    }
+                }
+
+                .pointer {
+                    /* 圆角线框的长度 */
+                    --l: 32px;
+                    /* 线框的粗细 */
+                    --t: 1px;
+                    /* 线框与图片的间隙 */
+                    --g: 12px;
+                    /* 图片宽度 */
+                    --w: 0px;
+                    /* 图片高度 */
+                    --h: 0px;
+                    /* 图片左上角的横坐标 */
+                    --x: 0px;
+                    /* 图片左上角的横坐标 */
+                    --y: 0px;
+                    position: absolute;
+                    z-index: -1;
+                    display: none;
+                    width: calc(var(--w) + var(--g) * 2);
+                    height: calc(var(--h) + var(--g) * 2);
+                    left: calc(var(--x) - var(--g));
+                    top: calc(var(--y) - var(--g));
+                    transition: all 0.5s;
+                    mask: conic-gradient(at var(--l) var(--l), transparent 75%, blue 75% 100%) 0 0 / calc(100% - var(--l)) calc(100% - var(--l)) repeat;
+                    border: var(--t) solid #ffffff;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="box">
+            <div class="pointer"></div>
+        </div>
+        <script>
+            const box = document.querySelector('.box');
+            const pointer = document.querySelector('.pointer');
+            const picturesLinkingList = [
+                'https://cn.bing.com/th?id=OHR.SleepingFox_ZH-CN2622967726_1920x1080.jpg',
+                'https://cn.bing.com/th?id=OHR.GoldenGateLight_ZH-CN3874822904_1920x1080.jpg',
+                'https://cn.bing.com/th?id=OHR.BlueAmsterdam_ZH-CN0483591394_1920x1080.jpg',
+                'https://cn.bing.com/th?id=OHR.BukhansanSeoul_ZH-CN8002920750_1920x1080.jpg',
+                'https://cn.bing.com/th?id=OHR.SantaCruzSunrise_ZH-CN3074203377_1920x1080.jpg',
+                'https://cn.bing.com/th?id=OHR.LeapingSquirrel_ZH-CN9112090462_1920x1080.jpg',
+                'https://cn.bing.com/th?id=OHR.LeucisticHummingbird_ZH-CN2921653789_1920x1080.jpg',
+                'https://cn.bing.com/th?id=OHR.ElephantRock_ZH-CN9293300383_1920x1080.jpg',
+                'https://cn.bing.com/th?id=OHR.WhiteEyes_ZH-CN1130380430_1920x1080.jpg',
+                'https://cn.bing.com/th?id=OHR.SolarEclipseOregon_EN-US2134131862_1920x1080.jpg',
+                'https://cn.bing.com/th?id=OHR.TulouFujian_ZH-CN4287018074_1920x1080.jpg',
+                'https://cn.bing.com/th?id=OHR.ChestnutBeeEater_ZH-CN3514753872_1920x1080.jpg',
+                'https://cn.bing.com/th?id=OHR.SummerSolstice2024_ZH-CN6141918663_1920x1080.jpg'
+            ];
+
+            function init(list = []) {
+                let el = '';
+
+                list.forEach(item => {
+                    let div = document.createElement('div');
+                    let img = document.createElement('img');
+
+                    div.className = 'item';
+                    img.src = item;
+                    img.alt = '图片加载失败';
+                    img.onmouseenter = function () {
+                        hoverOnmouseenter(this);
+                    };
+                    img.onmouseout = () => hoverOnmouseout();
+                    div.appendChild(img);
+
+                    box.appendChild(div);
+                });
+            }
+
+            init(picturesLinkingList);
+
+            function hoverOnmouseenter(el) {
+                pointer.style.display = 'block';
+                setTimeout(() => {
+                    pointer.style.setProperty('--w', el.offsetWidth + 'px');
+                    pointer.style.setProperty('--h', el.offsetHeight + 'px');
+                    pointer.style.setProperty('--x', el.offsetLeft + 'px');
+                    pointer.style.setProperty('--y', el.offsetTop + 'px');
+                }, 0);
+            }
+
+            function hoverOnmouseout() {
+                pointer.style.display = 'none';
+            }
+        </script>
+    </body>
+</html>
+
+<!-- 
+1、CSS部分定义全局样式，包括隐藏滚动条、设置背景颜色、.box容器的样式(包括网格布局、间距等)以及.item和.pointer的样式。
+2、.box > .item > img定义图片的样式，包括宽度、高度、对象填充、光标样式等。
+3、.box > .pointer定义.pointer元素的样式，包括位置、大小、边框、遮罩效果等。遮罩效果使用mask属性，通过conic-gradient创建一个圆角线框效果。
+
+使用mask属性来创建一个遮罩效果，该遮罩效果通过conic-gradient函数生成。conic-gradient是一种渐变类型，它从中心点开始，以圆锥形向外扩散颜色。代码的目的是在.pointer元素上创建一个四角线框的视觉效果。
+1、mask是CSS属性，用于定义元素的遮罩层。遮罩层可以隐藏元素的部分区域，只显示特定的形状或图案。
+2、conic-gradient(at var(--l) var(--l), transparent 75%, blue 75% 100%)是mask属性的值，它定义遮罩层的渐变效果。
+2.1、conic-gradient指定使用圆锥形渐变。
+2.2、at var(--l) var(--l)指定渐变的中心点位置。var(--l)是一个CSS自定义属性(也称为CSS变量)，它在.pointer元素的样式中被定义为线框长度(例如--l: 32px;)。这里的意思是渐变的中心点位于.pointer元素的左上角，距离左边缘和上边缘各为var(--l)。
+2.3、transparent 75%指定渐变的起始颜色和位置。transparent表示透明色，75%表示渐变从中心点开始，直到75%的位置都是透明的。
+2.4、blue 75% 100%指定渐变的结束颜色和位置。blue表示蓝色，75% 100%表示渐变从75%的位置开始，直到100%的位置都是蓝色。
+3、0 0 / calc(100% - var(--l)) calc(100% - var(--l)) repeat这部分定义遮罩层的大小和重复模式。
+3.1、0 0指定遮罩层的起始位置，这里表示从左上角开始。
+3.2、/ calc(100% - var(--l)) calc(100% - var(--l))指定遮罩层的大小。calc(100% - var(--l))计算出遮罩层的宽度和高度，减去线框长度var(--l)，这样遮罩层的大小就比.pointer元素的大小小var(--l)，从而在边缘形成四角效果。
+3.3、repeat: 指定遮罩层的重复模式。这里表示遮罩层的图案会重复填充整个元素。
+综上所述，代码通过mask属性和conic-gradient函数创建一个四角线框的视觉效果，该效果在.pointer元素上显示，通过调整--l变量的值可以改变线框的长度。这种技术常用于创建按钮、图标或其他元素的视觉效果。 -->
