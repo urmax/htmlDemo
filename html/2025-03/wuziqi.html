@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五子棋游戏</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        #board {
+            display: grid;
+            grid-template-columns: repeat(15, 30px);
+            grid-template-rows: repeat(15, 30px);
+            gap: 2px;
+            margin: 20px auto;
+            width: fit-content;
+            background-color: #f0d9b5;
+            border: 2px solid #000;
+        }
+
+        .cell {
+            width: 30px;
+            height: 30px;
+            background-color: #e0c9a5;
+            cursor: pointer;
+        }
+
+        .black {
+            background-color: #000;
+            border-radius: 50%;
+        }
+
+        .white {
+            background-color: #fff;
+            border-radius: 50%;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>五子棋游戏</h1>
+    <p>房间 ID: <span id="roomId"></span></p>
+    <div id="board"></div>
+    <button id="startBtn">开始游戏</button>
+    <button id="endBtn" disabled>结束游戏</button>
+    <p id="message"></p>
+
+    <script>
+        const board = document.getElementById('board');
+        const startBtn = document.getElementById('startBtn');
+        const endBtn = document.getElementById('endBtn');
+        const message = document.getElementById('message');
+        const roomId = new URLSearchParams(window.location.search).get('id') || 'default';
+        document.getElementById('roomId').textContent = roomId;
+
+        const rows = 15;
+        const cols = 15;
+        let gameBoard = Array.from({ length: rows }, () => Array(cols).fill(0));
+        let currentPlayer = 1;
+        let gameStarted = false;
+
+        // 创建棋盘
+        for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < cols; j++) {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.dataset.row = i;
+                cell.dataset.col = j;
+                cell.addEventListener('click', handleCellClick);
+                board.appendChild(cell);
+            }
+        }
+
+        // 开始游戏
+        startBtn.addEventListener('click', () => {
+            gameStarted = true;
+            startBtn.disabled = true;
+            endBtn.disabled = false;
+            message.textContent = '游戏开始，黑子先行';
+            gameBoard = Array.from({ length: rows }, () => Array(cols).fill(0));
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach(cell => cell.classList.remove('black', 'white'));
+        });
+
+        // 结束游戏
+        endBtn.addEventListener('click', () => {
+            gameStarted = false;
+            startBtn.disabled = false;
+            endBtn.disabled = true;
+            message.textContent = '游戏结束';
+        });
+
+        // 处理单元格点击事件
+        function handleCellClick() {
+            if (!gameStarted) return;
+            const row = parseInt(this.dataset.row);
+            const col = parseInt(this.dataset.col);
+            if (gameBoard[row][col] !== 0) return;
+
+            gameBoard[row][col] = currentPlayer;
+            this.classList.add(currentPlayer === 1 ? 'black' : 'white');
+
+            if (checkWin(row, col, currentPlayer)) {
+                gameStarted = false;
+                startBtn.disabled = false;
+                endBtn.disabled = true;
+                message.textContent = `${currentPlayer === 1 ? '黑子' : '白子'} 获胜！`;
+            } else {
+                currentPlayer = 3 - currentPlayer;
+                message.textContent = `${currentPlayer === 1 ? '黑子' : '白子'} 回合`;
+            }
+        }
+
+        // 检查是否获胜
+        function checkWin(row, col, player) {
+            const directions = [
+                [1, 0], [0, 1], [1, 1], [1, -1]
+            ];
+            for (const [dx, dy] of directions) {
+                let count = 1;
+                // 正向检查
+                for (let i = 1; i < 5; i++) {
+                    const newRow = row + i * dx;
+                    const newCol = col + i * dy;
+                    if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols && gameBoard[newRow][newCol] === player) {
+                        count++;
+                    } else {
+                        break;
+                    }
+                }
+                // 反向检查
+                for (let i = 1; i < 5; i++) {
+                    const newRow = row - i * dx;
+                    const newCol = col - i * dy;
+                    if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols && gameBoard[newRow][newCol] === player) {
+                        count++;
+                    } else {
+                        break;
+                    }
+                }
+                if (count >= 5) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    </script>
+</body>
+
+</html>

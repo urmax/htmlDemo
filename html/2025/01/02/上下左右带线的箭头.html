@@ -31,11 +31,42 @@
                 height: 10px; /* Length of the line */
                 background-color: #666;
             }
+
+            .arrow-container2 {
+                position: relative;
+                display: inline-block;
+                left: 50%;
+                transform: translateX(-50%);
+                top: -15px;
+            }
+
+            .arrow2 {
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 8px solid #666;
+            }
+
+            .arrow2::after {
+                content: '';
+                position: absolute;
+                top: -5px; /* Position it right below the arrowhead */
+                left: 50%;
+                transform: translateX(-50%);
+                width: 2px;
+                height: 10px; /* Length of the line */
+                background-color: #666;
+            }
         </style>
     </head>
     <body>
         <div class="arrow-container">
             <div class="arrow"></div>
+        </div>
+
+        <div class="arrow-container2">
+            <div class="arrow2"></div>
         </div>
     </body>
 </html>
